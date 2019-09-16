@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 
-const firebaseConfig = firebase.initializaApp({
+const firebaseConfig = firebase.initializeApp({
     apiKey: "AIzaSyCgLg1SrRJK6YZsbO58lWLpT0u-MeT0cEg",
     authDomain: "todoist-tutorial-3b78d.firebaseapp.com",
     databaseURL: "https://todoist-tutorial-3b78d.firebaseio.com",

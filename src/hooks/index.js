@@ -26,7 +26,7 @@ export const useTasks = selectedProject => {
             moment().format('DD/MM/YYYY')
             ))
         : selectedProject === 'INBOX' || selectedProject === 0
-        ? (unsubsribe = unsubscribe.where('date', '==', ''))
+        ? (unsubscribe = unsubscribe.where('date', '==', ''))
         :unsubscribe;
 
 
@@ -42,7 +42,7 @@ export const useTasks = selectedProject => {
                     task => moment(task.date, 'DD-MM-YYYY').diff(moment(), 'days') <= 7 &&
                     tasks.archived !== true
                 )
-                : newTasks.filter(task => task.archived != true)
+                : newTasks.filter(task => task.archived !== true)
             )
 
             setArchivedTasks(newTasks.filter(task => task.archived !== false))
@@ -58,3 +58,27 @@ export const useTasks = selectedProject => {
 
 // const selectedProject = 1;
 // const { tasks, archivedTasks } = useTasks(selectedProject);
+
+export const useProjects = () => {
+    const [projects, setProjects] = useState([]);
+
+    useEffect(() => {
+        firebase
+        .firestore()
+        .collection('projects')
+        .where('userId', '==','sdNISODnsdjOUSDmsdnD')
+        .orderBy('projectId')
+        .get()
+        .then(snapshot => {
+            const allProjects = snapshot.docs.map(project => ({
+                ...project.data(),
+                docId: project.id,
+            }));
+            if (JSON.stringify(allProjects) !== JSON.stringify(projects)){
+                setProjects(allProjects);
+            }
+        })
+    }, [projects]);
+
+    return {projects, setProjects}
+};
